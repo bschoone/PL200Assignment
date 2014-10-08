@@ -1,6 +1,6 @@
 %{
 #include <stdio.h>
-#include "y.tab.h"
+#include "assignment.tab.h"
 %}
 %%
 
@@ -18,7 +18,7 @@
 "FOR"					return _FOR_;
 "FUNCTION"				return _FUNCTION_;
 "IMPLEMENTATION"		return _IMPLEMENTATION_;
-"OF"					return _OF_
+"OF"					return _OF_;
 "PROCEDURE"				return _PROCEDURE_;
 "TYPE"					return _TYPE_;
 "VAR"					return _VAR_;
