@@ -7,7 +7,7 @@ LFILE = assignment.l
 CFILES = assignment.tab.c lex.yy.c 
 
 $(EXE): $(CFILES)
-	$(CC) $(EXE)
+	$(CC) -o $(EXE) $(CFILES) 
 
 lex.yy.c: $(LFILE) 
 	$(LEX) $(LFILE)

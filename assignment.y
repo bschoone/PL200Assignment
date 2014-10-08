@@ -26,11 +26,19 @@ main()
 %token _IDENT_
 
 %% 
+id_num:
+	
+		ident
+		{ printf("ID_NUM\n") } 
+	| 
+		number
+		{ printf("ID_NUM\n") }
+	;
 
 ident: 
 	_IDENT_
 	{
-		printf("IDENT");
+		printf("IDENT\n");
 	}
 	;
 
@@ -38,8 +46,9 @@ ident:
 number:
 	_NUMBER_
 	{
-		printf("NUMBER");
+		printf("NUMBER\n");
 	}
 	;
+
 
 %%
