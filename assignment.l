@@ -17,7 +17,9 @@
 "END WHILE"				return _END_WHILE_;
 "FOR"					return _FOR_;
 "FUNCTION"				return _FUNCTION_;
+"IF"					return _IF_;
 "IMPLEMENTATION"		return _IMPLEMENTATION_;
+"THEN"					return _THEN_;
 "OF"					return _OF_;
 "PROCEDURE"				return _PROCEDURE_;
 "TYPE"					return _TYPE_;
