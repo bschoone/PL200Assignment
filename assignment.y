@@ -14,7 +14,9 @@ int yywrap()
   
 main()
 {
-        yyparse();
+		int returncode;
+        returncode = yyparse();
+        return returncode;
 } 
 
 %}
@@ -22,14 +24,140 @@ main()
 %token _ARRAY_ _BEGIN_ _CALL_ _CONST_ _DECLARATION_ _DO_ _END_ _END_DO_ _END_IF_ 
 %token _END_FOR_ _END_WHILE_ _FOR_ _FUNCTION_ _IF_ _IMPLEMENTATION_ _THEN_ _OF_ 
 %token _PROCEDURE_ _TYPE_ _VAR_ _WHILE_ _ASSIGN_ _SEMICOLON_
-%token _EQUALS_ _NUMBER_ 
+%token _NUMBER_ 
 %token _IDENT_ _DOTDOT_
 
-%start specification_part
+%start basic_program
 %%
 
-enumerated_type
-		'{' ident 
+basic_program:
+		declaration_unit
+	|	implementation_unit
+		{printf("basic_program\n");}
+	;
+
+/*declaration_unit and its relevant rules*/
+optional_const:
+		_CONST_	constant_declaration
+	|
+		{}
+	;
+optional_var:
+		_VAR_ variable_declaration
+	|
+		{}
+
+	;
+
+optional_type_declaration:
+		type_declaration
+	|
+		{}
+
+	;
+
+optional_procedure_interface:
+		procedure_interface
+	|
+		{}
+
+	;
+
+optional_function_interface:
+		function_interface
+	|
+		{}
+
+	;
+
+declaration_unit:
+		_DECLARATION_ _OF_ ident 
+			optional_const optional_var 
+			optional_type_declaration 
+			optional_procedure_interface
+			optional_function_interface 
+		_DECLARATION_ _END_
+		{printf("declaration_unit\n");}
+	;
+/* -----------------------------------------------*/
+
+procedure_interface:
+		_PROCEDURE_ ident
+	|	_PROCEDURE_ ident formal_parameters
+		{printf("_PROCEDURE_ ident formal_parameters\n");}
+	;
+
+function_interface:
+		_FUNCTION_ ident
+	| 	_FUNCTION_ ident formal_parameters 
+		{printf("_FUNCTION ident formal_parameters\n");}
+	;
+
+type_declaration:
+		_TYPE_ ident ':' type ';'
+		{printf("_TYPE_ ident : type ;\n");}
+	;
+
+ident_semicolon:
+		ident	
+	|	ident_semicolon ';' ident
+		{printf("ident_semicolon\n");}
+	;	
+
+formal_parameters:
+		'(' ident_semicolon ')'
+		{printf("formal_parameters\n");}
+	;
+
+constant_loop:
+		ident '=' number
+	| 	constant_loop ',' ident '=' number
+		{printf("constant_loop\n");}
+	;
+
+constant_declaration:
+		constant_loop ';'
+		{printf("constant_loop\n");}
+	;
+
+variable_loop:
+		ident ':' ident
+	| 	variable_loop ',' ident ':' ident
+		{printf("varible_loop\n");}
+	;
+
+
+variable_declaration:
+		variable_loop ';'
+		{printf("variable_declaration\n");}
+	;
+
+type:
+		basic_type
+	|
+		array_type
+		{printf("type: basic_type or array_type\n");}
+	;
+
+basic_type:
+		ident
+	|
+		enumerated_type
+	|
+		range_type
+		{printf("basic_type: ident or enumerated type\n");}
+	;
+
+ident_list:
+		ident	
+	|	ident_list ',' ident
+		{printf("ident_list\n");}
+	;
+
+enumerated_type:
+		'{' ident_list '}'
+		{printf("enumerated_type\n");}
+	;
 
 range_type:
 		'[' range ']'
@@ -37,36 +165,30 @@ range_type:
 	;
 
 array_type:
-		ARRAY ident '[' range ']' _OF_ array_type
-		{printf("ARRAY ident [ range ] of array_type\n")}
+		_ARRAY_ ident '[' range ']' _OF_ type
+		{printf("ARRAY ident [ range ] of type\n")}
 	;
 
 range:
 		number _DOTDOT_ number
 		{printf("number DOTDOT number\n")}
 	;
+
 implementation_unit: 
 		_IMPLEMENTATION_ _OF_ ident block '.'
 		{printf("IMPLEMENTATION OF ident block .\n")}
 	;
 
-variable_declaration:
-		ident ':' ident ';' 
-	;
-
-constant_declaration:
-		ident _EQUALS_ number ';' 
-	;
 block: 
 		specification_part implementation_part
 		{printf("specification_part implementation_part\n")}
 	;
+
 specification_part:
 		_CONST_ constant_declaration
 	|	_VAR_ variable_declaration
 	|	procedure_declaration
 	|	function_declaration
-	|
 	{printf("i dunno what to wriote here\n")}
 	;
 
@@ -130,7 +252,7 @@ statement_loop:
 		statement
 		{printf("STATEMENT\n")}
 	|
-		statement ';' statement
+		statement_loop ';' statement
 		{printf("STATEMENT ; STATEMENT\n")}
 	;
 
@@ -166,14 +288,6 @@ id_num:
 		{ printf("ID_NUM\n") }
 	;
 
-ident: 
-	_IDENT_
-	{
-		printf("IDENT\n");
-	}
-	;
-
-
 number:
 	_NUMBER_
 	{
@@ -181,5 +295,11 @@ number:
 	}
 	;
 
+ident: 
+	_IDENT_
+	{
+		printf("IDENT\n");
+	}
+	;
 
 %%

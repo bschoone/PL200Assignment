@@ -35,7 +35,7 @@
 ")"						return ')';
 "."						return '.';
 ","						return ','; 
-"="						return _EQUALS_;
+"="						return '=';
 "*"						return '*';
 "/"						return '/';
 "+"						return '+';			
