@@ -30,23 +30,15 @@
 
 <statement> ::= <assignment> | <procedure_call> | <if_statement> | <while_statement> | <do_statement> | <for_statement> | <compound_statement>
 
-
-
-
-
-
-
-
-
-
-
-
-
 <implementation_part> ::= <statement>
 
 <function_declaration> ::= FUNCTION, <ident>, ";", <block>, ";"
 
 <procedure_declaration> ::= PROCEDURE, <ident>, ";", <block>, ";"
+
+
+
+
 
 <specification_part> ::= {} | CONST, <constant_declaration> | VAR, <variable_declaration> | <procedure_declaration> | 
 <function_declaration>
@@ -69,7 +61,7 @@
 
 <variable_declaration> ::= <ident>, ":", <ident>, {",", <ident>, ":", <ident>}, ";"
 
-<contant_declaration> ::= <ident>, "=", <number>, {",", <ident>, "=", <number>}, ";"
+<constant_declaration> ::= <ident>, "=", <number>, {",", <ident>, "=", <number>}, ";"
 
 <formal_parameters> ::= "(", <ident>, {";", <ident>}, ")"
 
