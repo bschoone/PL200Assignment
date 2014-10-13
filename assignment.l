@@ -43,6 +43,6 @@
 ":"						return ':';
 ".."					return _DOTDOT_;
 [0-9]+					return _NUMBER_;
-[a-z]+					return _IDENT_;
+[a-zA-Z]+				return _IDENT_;
 
 %%

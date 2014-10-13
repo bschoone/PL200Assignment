@@ -32,6 +32,7 @@ main()
 
 basic_program:
 		declaration_unit
+		{printf("basic_program\n");}
 	|	implementation_unit
 		{printf("basic_program\n");}
 	;
@@ -94,13 +95,13 @@ function_interface:
 	;
 
 type_declaration:
-		_TYPE_ ident ':' type ';'
+		_TYPE_ ident ':' type _SEMICOLON_
 		{printf("_TYPE_ ident : type ;\n");}
 	;
 
 ident_semicolon:
 		ident	
-	|	ident_semicolon ';' ident
+	|	ident_semicolon _SEMICOLON_ ident
 		{printf("ident_semicolon\n");}
 	;	
 
@@ -111,13 +112,14 @@ formal_parameters:
 
 constant_loop:
 		ident '=' number
+		{printf("ident = number\n");}
 	| 	constant_loop ',' ident '=' number
 		{printf("constant_loop\n");}
 	;
 
 constant_declaration:
-		constant_loop ';'
-		{printf("constant_loop\n");}
+		constant_loop _SEMICOLON_
+		{printf("constant_declaration\n");}
 	;
 
 variable_loop:
@@ -128,7 +130,7 @@ variable_loop:
 
 
 variable_declaration:
-		variable_loop ';'
+		variable_loop _SEMICOLON_
 		{printf("variable_declaration\n");}
 	;
 
@@ -193,12 +195,12 @@ specification_part:
 	;
 
 procedure_declaration:
-		_PROCEDURE_ ident ';' block ';'
+		_PROCEDURE_ ident _SEMICOLON_ block _SEMICOLON_
 		{printf("PROCEDURE ident ; block ; \n")}
 	;
 
 function_declaration:
-		_FUNCTION_ ident ';' block ';'
+		_FUNCTION_ ident _SEMICOLON_ block _SEMICOLON_
 		{printf("FUNCTION ident ; block ;\n")}
 	;
 
@@ -252,7 +254,7 @@ statement_loop:
 		statement
 		{printf("STATEMENT\n")}
 	|
-		statement_loop ';' statement
+		statement_loop _SEMICOLON_ statement
 		{printf("STATEMENT ; STATEMENT\n")}
 	;
 
@@ -260,11 +262,11 @@ expression:
 		term
 		{printf("TERM\n")} 
 	|
-		term '+' term
+		expression '+' term
 		{printf("TERM + TERM\n")}
 
 	| 
-		term '-' term		
+		expression '-' term		
 		{printf("TERM - TERM\n")}
 	;
 
@@ -272,11 +274,11 @@ term:
 		id_num
 		{printf("ID_NUM\n")} 
 	|
-		id_num '*' id_num
+		term '*' id_num
 		{printf("ID_NUM * ID_NUM\n")}
 
 	| 
-		id_num '/' id_num		
+		term '/' id_num		
 		{printf("ID_NUM / ID_NUM\n")}
 	;
 
