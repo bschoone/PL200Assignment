@@ -84,12 +84,14 @@ declaration_unit:
 
 procedure_interface:
 		_PROCEDURE_ ident
+		{printf("procedure_interface\n");}
 	|	_PROCEDURE_ ident formal_parameters
 		{printf("_PROCEDURE_ ident formal_parameters\n");}
 	;
 
 function_interface:
 		_FUNCTION_ ident
+		{printf("function_interface\n");}
 	| 	_FUNCTION_ ident formal_parameters 
 		{printf("_FUNCTION ident formal_parameters\n");}
 	;
@@ -188,9 +190,14 @@ block:
 
 specification_part:
 		_CONST_ constant_declaration
+		{printf("i dunno what to wriote here\n")}
 	|	_VAR_ variable_declaration
+		{printf("i dunno what to wriote here\n")}
 	|	procedure_declaration
+		{printf("i dunno what to wriote here\n")}
 	|	function_declaration
+		{printf("i dunno what to wriote here\n")}
+	| {}
 	{printf("i dunno what to wriote here\n")}
 	;
 
