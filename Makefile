@@ -16,4 +16,5 @@ assignment.tab.c: $(YFILE)
 	$(YACC) --report=state -d $(YFILE)
 
 clean:
+	touch $(EXE) $(CFILES) touch.output touch.tab.h
 	rm $(EXE) $(CFILES) *.output *.tab.h
