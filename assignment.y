@@ -40,11 +40,13 @@ basic_program:
 /*declaration_unit and its relevant rules*/
 optional_const:
 		_CONST_	constant_declaration
+		{printf("optional_const\n");}
 	|
 		{}
 	;
 optional_var:
 		_VAR_ variable_declaration
+		{printf("option_var\n");}
 	|
 		{}
 
@@ -52,6 +54,7 @@ optional_var:
 
 optional_type_declaration:
 		type_declaration
+		{printf("optional_type_declaration\n");}
 	|
 		{}
 
@@ -59,6 +62,7 @@ optional_type_declaration:
 
 optional_procedure_interface:
 		procedure_interface
+		{printf("optional_procedure_interface\n");}
 	|
 		{}
 
@@ -66,6 +70,7 @@ optional_procedure_interface:
 
 optional_function_interface:
 		function_interface
+		{printf("optional_function_interface\n");}
 	|
 		{}
 
@@ -86,19 +91,19 @@ procedure_interface:
 		_PROCEDURE_ ident
 		{printf("procedure_interface\n");}
 	|	_PROCEDURE_ ident formal_parameters
-		{printf("_PROCEDURE_ ident formal_parameters\n");}
+		{printf("procedure_interface\n");}
 	;
 
 function_interface:
 		_FUNCTION_ ident
 		{printf("function_interface\n");}
 	| 	_FUNCTION_ ident formal_parameters 
-		{printf("_FUNCTION ident formal_parameters\n");}
+		{printf("function_interface\n");}
 	;
 
 type_declaration:
 		_TYPE_ ident ':' type _SEMICOLON_
-		{printf("_TYPE_ ident : type ;\n");}
+		{printf("type_declaration\n");}
 	;
 
 ident_semicolon:
@@ -114,7 +119,7 @@ formal_parameters:
 
 constant_loop:
 		ident '=' number
-		{printf("ident = number\n");}
+		{printf("constant_loop\n");}
 	| 	constant_loop ',' ident '=' number
 		{printf("constant_loop\n");}
 	;
@@ -126,6 +131,7 @@ constant_declaration:
 
 variable_loop:
 		ident ':' ident
+		{printf("variable_loop\n");}
 	| 	variable_loop ',' ident ':' ident
 		{printf("varible_loop\n");}
 	;
@@ -138,22 +144,25 @@ variable_declaration:
 
 type:
 		basic_type
+		{printf("type\n");}
 	|
 		array_type
-		{printf("type: basic_type or array_type\n");}
+		{printf("type\n");}
 	;
 
 basic_type:
 		ident
+		{printf("\n");}
 	|
 		enumerated_type
+		{printf("\n");}
 	|
 		range_type
-		{printf("basic_type: ident or enumerated type\n");}
+		{printf("\n");}
 	;
 
 ident_list:
-		ident	
+		ident
 	|	ident_list ',' ident
 		{printf("ident_list\n");}
 	;
@@ -170,27 +179,27 @@ range_type:
 
 array_type:
 		_ARRAY_ ident '[' range ']' _OF_ type
-		{printf("ARRAY ident [ range ] of type\n")}
+		{printf("array_type\n")}
 	;
 
 range:
 		number _DOTDOT_ number
-		{printf("number DOTDOT number\n")}
+		{printf("range\n")}
 	;
 
 implementation_unit: 
 		_IMPLEMENTATION_ _OF_ ident block '.'
-		{printf("IMPLEMENTATION OF ident block .\n")}
+		{printf("implementation_unit\n")}
 	;
 
 block: 
 		specification_part implementation_part
-		{printf("specification_part implementation_part\n")}
+		{printf("block\n")}
 	;
 
 specification_part:
 		_CONST_ constant_declaration
-		{printf("i dunno what to wriote here\n")}
+		{printf("specification_part\n")}
 	|	_VAR_ variable_declaration
 		{printf("i dunno what to wriote here\n")}
 	|	procedure_declaration
@@ -203,12 +212,12 @@ specification_part:
 
 procedure_declaration:
 		_PROCEDURE_ ident _SEMICOLON_ block _SEMICOLON_
-		{printf("PROCEDURE ident ; block ; \n")}
+		{printf("procedure_declaration\n")}
 	;
 
 function_declaration:
 		_FUNCTION_ ident _SEMICOLON_ block _SEMICOLON_
-		{printf("FUNCTION ident ; block ;\n")}
+		{printf("function_declaration\n")}
 	;
 
 implementation_part:
@@ -224,37 +233,37 @@ statement:
 
 assignment:
 		ident _ASSIGN_ expression
-		{printf("ident := expression\n")}
+		{printf("assignment\n")}
 	;
 
 procedure_call:
 		_CALL_ ident
-		{printf("CALL ident\n")}
+		{printf("procedure_call\n")}
 	;
 
 if_statement:
 		_IF_ expression _THEN_ statement _END_IF_
-		{printf("IF expression THEN statment END_IF\n")}
+		{printf("if_statement\n")}
 	;
 
 while_statement:
 		_WHILE_ expression _DO_ statement_loop _END_WHILE_
-		{printf("WHILE expression DO statement_loop END_WHILE\n")}
+		{printf("while_statement\n")}
 	;
 
 do_statement:
 		_DO_ statement_loop _WHILE_ expression _END_DO_
-		{printf("DO statement_loop WHILE expression END_DO\n")}
+		{printf("do_statement\n")}
 	;
 
 for_statement:
 		_FOR_ ident _ASSIGN_ expression _DO_ statement_loop _END_FOR_
-		{printf("FOR ident := expression DO statment_loop END FOR\n")}
+		{printf("for_statement\n")}
 	;
 
 compound_statement:
 		_BEGIN_ statement_loop _END_
-		{printf("BEGIN STATMENT_LOOP END\n")}
+		{printf("compound_statement\n")}
 	;
 
 statement_loop:
@@ -299,16 +308,12 @@ id_num:
 
 number:
 	_NUMBER_
-	{
-		printf("NUMBER\n");
-	}
+	{ printf("NUMBER\n"); }
 	;
 
 ident: 
 	_IDENT_
-	{
-		printf("IDENT\n");
-	}
+	{ printf("IDENT\n"); }
 	;
 
 %%

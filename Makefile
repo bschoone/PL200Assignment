@@ -1,5 +1,5 @@
 CC = gcc
-EXE = Assignment
+EXE = PL2014_check
 LEX = flex
 YACC = bison
 YFILE = assignment.y 

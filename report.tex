@@ -1,0 +1,85 @@
+\documentclass[a4paper,12pt,notitlepage]{article}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+
+\title{Programming Languages 200 Assignment Report}
+\author{Bradley Jay Schoone\\Student ID: 16144198}
+
+\date{October, 2014}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+Practical Time: Wednesday, 4pm \- 5pm
+\end{center}
+
+\begin{center}
+I, Bradley Jay Schoone (16144198), certify that this document and all code relating to it was written by myself, unless otherwise stated.
+\end{center}
+\clearpage
+\section{Usage}
+\begin{itemize}
+  \item Firstly, run ``make clean" to remove the old compiled files files and log files.
+  \item Then simply run ``make" to compile the program.
+\end{itemize}
+
+\section{Structure of My Source Code}
+
+\subsection{EBNF}
+Located in the \texttt{EBNF.txt} file.
+The EBNF follows the ISO BNF Standard.
+
+\subsection{Lex}
+Located in the \texttt{assignment.l} file.
+
+The single character tokens simply return themselves for simplicity's sake, except for the \texttt{;} character, because after 4 seconds of trying to escape the character so it could be used as a token , I couldn't figure out how, so I simply called it \texttt{\_SEMICOLON\_}.
+
+This was pretty straight forward.
+
+
+\subsection{Yacc}
+Located in the \texttt{assignment.y} file.
+
+Yacc is not very much fun at all.
+
+This Yacc file differs from my EBNF slightly, as I needed a few more rules in certain cases to make sure that it matched my EBNF correctly and functioned as described in the Syntax Diagram (See (3) Design Issues).
+
+
+\section{Design Issues}
+
+
+
+\subsection{Infinite Loops in the EBNF}
+Some of the cases specified in the Syntax Diagram allow for a seemingly infinite loops.
+For example with the \texttt{variable\_declaration}, the language is allowed to have as many "ident : ident" separated by commas as it pleases.
+
+This made translating to Yacc difficult. Thus, using Left-Recursion, i needed to add another rule to make sure the language worked correctly.
+
+\subsection{Syntactic Sugar in the Language}
+Another thing I had to cater for was syntactic consistency.
+I allowed for identifiers to be only lowercase and for reserved words, such as END, WHILE, BEGIN etc to be uppercase. 
+
+Reason being, there might be some confusion syntactically as to what was a reserved word and what wasn't if mixed casing was allowed. Plus, it also make the languages source code much more readable.
+
+In my Lex, i also ignore whitespace. So the output lines up nicely and doesnt look all too awful.
+
+\section{References}
+\begin{itemize}
+    \item lex \& yacc, 2nd Edition by O'Reilly Media: 
+    
+    \texttt{http://shop.oreilly.com/product/9781565920002.do}
+    
+    \item Lex and YACC Primer by Bert Hubert:
+    
+    \texttt{http://ds9a.nl/lex-yacc/cvs/lex-yacc-howto.html}
+    \item Curtin University Programming Languages 200 Lecture Materials 
+    
+\end{itemize}
+
+\end{document}

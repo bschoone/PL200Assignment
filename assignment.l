@@ -44,5 +44,6 @@
 ".."					return _DOTDOT_;
 [0-9]+					return _NUMBER_;
 [a-zA-Z]+				return _IDENT_;
+[ \t]+                  /* ignore whitespace */;
 
 %%
